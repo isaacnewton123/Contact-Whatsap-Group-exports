@@ -1,0 +1,19 @@
+{
+  "name": "contact-whatsapp-group-exports",
+  "version": "1.0.0",
+  "description": "Export WhatsApp Web group members to Excel, CSV, or vCard.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isaacnewton123/Contact-Whatsap-Group-exports.git"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/stage.ps1",
+    "package": "npm run build && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package.ps1",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.1.1",
+    "typescript": "^5.7.2"
+  }
+}

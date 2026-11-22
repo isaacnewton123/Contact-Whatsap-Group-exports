@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact WhatsApp Group Exports</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <img src="icons/logo.png" width="40" height="40" alt="" />
+      <div>
+        <h1>Contact WhatsApp Group Exports</h1>
+        <p>Members stay on this computer.</p>
+      </div>
+    </header>
+
+    <section id="gate" class="panel">
+      <div id="spinner" class="spinner" aria-hidden="true"></div>
+      <p id="gate-text">Reading WhatsApp Web…</p>
+      <button id="btn-retry" class="ghost" type="button" hidden>Try again</button>
+    </section>
+
+    <section id="workspace" hidden>
+      <article class="panel" id="active-card"></article>
+      <div class="actions">
+        <button id="btn-active" class="primary" type="button">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+          </svg>
+          Export this group
+        </button>
+        <button id="btn-all" class="ghost" type="button">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"
+            />
+          </svg>
+          Export all groups
+        </button>
+      </div>
+      <p id="form-error" class="note" hidden></p>
+      <p class="fine">This only reads members. It never sends a message or changes a group.</p>
+    </section>
+
+    <section id="progress" class="panel" hidden>
+      <div class="track"><div id="bar"></div></div>
+      <p id="progress-text">Reading members…</p>
+    </section>
+
+    <section id="result" hidden>
+      <div class="stats" id="stats"></div>
+      <p id="warning" class="note" hidden></p>
+      <label class="search">
+        <span class="sr">Search</span>
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+          />
+        </svg>
+        <input id="query" type="search" placeholder="Search name, number, or group" />
+      </label>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Role</th>
+              <th>Group</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <p id="preview-note" class="fine"></p>
+      <div class="downloads">
+        <button id="btn-xls" class="primary" type="button" disabled>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+          </svg>
+          Excel
+        </button>
+        <button id="btn-csv" class="ghost" type="button" disabled>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+          </svg>
+          CSV
+        </button>
+        <button id="btn-vcf" class="ghost" type="button" disabled>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M20 0H4v2h16V0zM4 24h16v-2H4v2zM20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 2.75c1.24 0 2.25 1.01 2.25 2.25S13.24 11.25 12 11.25 9.75 10.24 9.75 9 10.76 6.75 12 6.75zM17 17H7v-1.5c0-1.67 3.33-2.5 5-2.5s5 .83 5 2.5V17z"
+            />
+          </svg>
+          vCard
+        </button>
+        <button id="btn-copy" class="ghost" type="button" disabled>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+            />
+          </svg>
+          <span id="copy-label">Copy numbers</span>
+        </button>
+      </div>
+    </section>
+
+    <footer class="support">
+      <a href="https://ko-fi.com/isaacnewton1" target="_blank" rel="noreferrer">Ko-fi</a>
+      <a href="https://trakteer.id/isaacnewton1/link" target="_blank" rel="noreferrer">Trakteer</a>
+      <a href="https://github.com/sponsors/isaacnewton123" target="_blank" rel="noreferrer">GitHub Sponsors</a>
+    </footer>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
